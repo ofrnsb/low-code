@@ -70,19 +70,6 @@ function extractJavaScript() {
 
   let fileContent = '';
 
-  function addStateGenerator(elementId) {
-    let targetIndex = makeItArray.findIndex(
-      (state) => state.data.updater === elementId
-    );
-
-    console.log(elementId);
-    console.log(makeItArray);
-    console.log(targetIndex);
-    // return `set${makeItArray[targetIndex].stateName}(${JSON.stringify(
-    //   makeItArray[targetIndex].data
-    // )});`;
-  }
-
   fileContent += scriptImports;
 
   if (makeItArray) {
@@ -110,15 +97,29 @@ function extractJavaScript() {
     });
   }
 
-  SAVED_BUTTONFUNCTION.forEach((func) => {
-    fileContent += `
-document
-.getElementById('${func.id}')
-.addEventListener('click', function () {
-${func.functionCode}
-${addStateGenerator(func.id)}
-});
-      `;
+  function addStateGenerator(listener) {
+    let returnedFunction = '';
+    SAVED_BUTTONFUNCTION.forEach((func) => {
+      if (func.id === listener) {
+        returnedFunction = `${func.functionCode}`;
+      }
+    });
+    return returnedFunction;
+  }
+
+  makeItArray.forEach((state, stateId) => {
+    state.data.listeners.forEach((listener, listenerId) => {
+      fileContent += `
+      document
+      .getElementById('${listener}')
+      .addEventListener('click', function () {
+        ${addStateGenerator(listener)}
+        set${makeItArray[stateId].stateName
+          .charAt(0)
+          .toUpperCase()}${state.stateName.slice(1)}.setState();
+      });
+            `;
+    });
   });
 
   return fileContent;
