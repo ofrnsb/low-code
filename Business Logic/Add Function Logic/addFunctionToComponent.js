@@ -28,7 +28,7 @@ export function showAddFunctionModal() {
     .getElementById('add-function-button')
     .addEventListener('click', function () {
       if (SAVED_BUTTONFUNCTION) {
-        JSON.parse(SAVED_BUTTONFUNCTION).forEach((func) => {
+        SAVED_BUTTONFUNCTION.forEach((func) => {
           if (whichComponent.getState().id == func.id) {
             ADDFUNCTION_TEXTARE.value = func.functionCode.join('\n');
           }

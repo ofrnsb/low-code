@@ -70,14 +70,17 @@ function extractJavaScript() {
 
   let fileContent = '';
 
-  function addStateGenerator(elementId, type) {
+  function addStateGenerator(elementId) {
     let targetIndex = makeItArray.findIndex(
-      (state) => state.data.listener === elementId
+      (state) => state.data.updater === elementId
     );
 
-    return `set${makeItArray[targetIndex].stateName}(${JSON.stringify(
-      makeItArray[targetIndex].data
-    )});`;
+    console.log(elementId);
+    console.log(makeItArray);
+    console.log(targetIndex);
+    // return `set${makeItArray[targetIndex].stateName}(${JSON.stringify(
+    //   makeItArray[targetIndex].data
+    // )});`;
   }
 
   fileContent += scriptImports;
@@ -107,13 +110,13 @@ function extractJavaScript() {
     });
   }
 
-  console.log(SAVED_BUTTONFUNCTION);
   SAVED_BUTTONFUNCTION.forEach((func) => {
     fileContent += `
 document
 .getElementById('${func.id}')
 .addEventListener('click', function () {
 ${func.functionCode}
+${addStateGenerator(func.id)}
 });
       `;
   });
