@@ -28,8 +28,6 @@ export function UpdateState() {
     let textAreaValue = JSON.parse(UPDATESTATE_TEXTAREA.value);
     let savedState = JSON.parse(SAVED_STATE);
     try {
-      // localStorage.removeItem('stateContent');
-      // localStorage.setItem('stateContent', UPDATESTATE_TEXTAREA.value);
       let targetIndex = savedState.findIndex(
         (state) => state.stateName === textAreaValue.stateName
       );

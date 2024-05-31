@@ -27,15 +27,16 @@ export function showAddFunctionModal() {
   document
     .getElementById('add-function-button')
     .addEventListener('click', function () {
-      SAVED_BUTTONFUNCTION.forEach((func) => {
-        if (whichComponent.getState().id == func.id) {
-          ADDFUNCTION_TEXTARE.value = func.functionCode.join('\n');
-        }
-      });
-      ADDFUNCTION_TEXTARE.placeholder = `Add function to ${
-        whichComponent.getState().id
-      }`;
-
+      if (SAVED_BUTTONFUNCTION) {
+        JSON.parse(SAVED_BUTTONFUNCTION).forEach((func) => {
+          if (whichComponent.getState().id == func.id) {
+            ADDFUNCTION_TEXTARE.value = func.functionCode.join('\n');
+          }
+        });
+        ADDFUNCTION_TEXTARE.placeholder = `Add function to ${
+          whichComponent.getState().id
+        }`;
+      }
       ADDFUNCTION_MODAL.classList.add('visible');
     });
 
@@ -101,6 +102,8 @@ export function showAddFunctionModal() {
         POPUPMESSAGE_MODAL.classList.remove('error');
       }, 1000);
     }
+
+    console.log(appFunctionality.getState());
   });
 }
 

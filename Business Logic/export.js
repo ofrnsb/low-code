@@ -1,5 +1,4 @@
-import { SAVED_STATE } from '../Data/CONST.js';
-import { retrieveState } from './Global State Management/globalStateManagement.js';
+import { SAVED_BUTTONFUNCTION, SAVED_STATE } from '../Data/CONST.js';
 import { EDITOR, EXPORT_BUTTON } from './main.js';
 
 export function setupExport() {
@@ -69,39 +68,47 @@ function extractJavaScript() {
 
   const makeItArray = JSON.parse(SAVED_STATE);
 
-  const {
-    stateObj: appFunctionality,
-    subscribeToState: subscribeToAppFunctionalityState,
-  } = retrieveState('appFunctionality');
-
   let fileContent = '';
+
+  function addStateGenerator(elementId, type) {
+    let targetIndex = makeItArray.findIndex(
+      (state) => state.data.listener === elementId
+    );
+
+    return `set${makeItArray[targetIndex].stateName}(${JSON.stringify(
+      makeItArray[targetIndex].data
+    )});`;
+  }
 
   fileContent += scriptImports;
 
-  makeItArray.forEach((state) => {
-    const capitalizedStateName = `${state.stateName
-      .charAt(0)
-      .toUpperCase()}${state.stateName.slice(1)}`;
-    fileContent += `const set${capitalizedStateName} = releaseState('${
-      state.stateName
-    }', ${
-      state.type === 'array'
-        ? '[]'
-        : state.type === 'string'
-        ? "''"
-        : state.type === 'boolean'
-        ? 'false'
-        : '{}'
-    });
+  if (makeItArray) {
+    makeItArray.forEach((state) => {
+      const capitalizedStateName = `${state.stateName
+        .charAt(0)
+        .toUpperCase()}${state.stateName.slice(1)}`;
+      fileContent += `const set${capitalizedStateName} = releaseState('${
+        state.stateName
+      }', ${
+        state.type === 'array'
+          ? '[]'
+          : state.type === 'string'
+          ? "''"
+          : state.type === 'boolean'
+          ? 'false'
+          : '{}'
+      });
     const {
       stateObj: get${capitalizedStateName},
       subscribeToState: subsTo${capitalizedStateName},
     } = retrieveState('${state.stateName}');\n
     
     `;
-  });
+    });
+  }
 
-  appFunctionality.data.forEach((func) => {
+  console.log(SAVED_BUTTONFUNCTION);
+  SAVED_BUTTONFUNCTION.forEach((func) => {
     fileContent += `
 document
 .getElementById('${func.id}')

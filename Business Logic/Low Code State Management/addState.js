@@ -18,7 +18,6 @@ export function AddState() {
     stateObj = JSON.parse(SAVED_STATE);
   } else {
     stateObj = [];
-    console.error('No state content found', stateObj);
   }
 
   let functions = [];

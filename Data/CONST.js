@@ -3,6 +3,8 @@ export const cssUnitRegex = {
 };
 export const SAVED_WORK = localStorage.getItem('editorContent');
 
-export const SAVED_BUTTONFUNCTION = localStorage.getItem('appFunctionality');
+export const SAVED_BUTTONFUNCTION = JSON.parse(
+  localStorage.getItem('appFunctionality')
+);
 
 export const SAVED_STATE = localStorage.getItem('stateContent');
