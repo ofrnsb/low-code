@@ -58,6 +58,15 @@ export function setupCSSForm() {
           }
         });
 
+        if (
+          lastSelectedComponentId !== undefined &&
+          selectedComponent.id !== lastSelectedComponentId
+        ) {
+          document
+            .getElementById(`${lastSelectedComponentId}`)
+            .classList.remove('clicked');
+        }
+
         lastSelectedComponentId = selectedComponent.id;
         ADDFUNCTION_BUTTON.removeAttribute('disabled');
         REMOVE_BUTTON.removeAttribute('disabled');
