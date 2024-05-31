@@ -1,4 +1,8 @@
-import { SAVED_BUTTONFUNCTION, SAVED_STATE } from '../Data/CONST.js';
+import {
+  SAVED_BUTTONFUNCTION,
+  SAVED_STATE,
+  updateSavedButtonFunction,
+} from '../Data/CONST.js';
 import { EDITOR, EXPORT_BUTTON } from './main.js';
 
 export function setupExport() {
@@ -98,6 +102,7 @@ function extractJavaScript() {
   }
 
   function addStateGenerator(listener) {
+    updateSavedButtonFunction();
     let returnedFunction = '';
     SAVED_BUTTONFUNCTION.forEach((func) => {
       if (func.id === listener) {
