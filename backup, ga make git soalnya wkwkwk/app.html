@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <div class="popup-message" id="popup-message">saved</div>
+    <div class="sidebar" id="sidebar" style="overflow: scroll"></div>
+    <div class="editor" id="editor"></div>
+    <div class="css-sidebar" id="css-sidebar"></div>
+
+    <div
+      draggable="true"
+      name="add-function"
+      id="add-function"
+      class="add-function"
+    >
+      <div
+        draggable="true"
+        name="add-function-wrapper"
+        id="add-function-wrapper"
+        class="add-function-wrapper"
+      >
+        <button class="close-button" id="close-button">x</button>
+        <textarea
+          type="text"
+          name="function-input"
+          id="function-input"
+          class="function-input"
+          style="font-size: 12px"
+        ></textarea>
+
+        <input
+          id="add-function-submit"
+          type="submit"
+          class="add-function-submit"
+        />
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Prototype V-0.1</title>
+    <link rel="stylesheet" href="./dnd.css" />
+  </head>
+
+  <body id="bodyApp">
+    <div class="popup-message" id="popup-message">saved</div>
+    <div class="sidebar" id="sidebar" style="overflow: scroll"></div>
+    <div class="editor" id="editor"></div>
+    <div class="css-sidebar" id="css-sidebar"></div>
+
+    <div
+      draggable="true"
+      name="update-state"
+      id="update-state"
+      class="update-state"
+    >
+      <div
+        draggable="true"
+        name="update-state-wrapper"
+        id="update-state-wrapper"
+        class="update-state-wrapper"
+      >
+        <button class="update-close-button" id="update-close-button">x</button>
+        <textarea
+          type="text"
+          name="-update-state-input"
+          id="update-state-input"
+          class="update-state-input"
+          style="font-size: 12px"
+        ></textarea>
+
+        <input
+          id="update-state-submit"
+          type="submit"
+          class="update-state-submit"
+        />
+      </div>
+    </div>
+
+    <div draggable="true" name="add-state" id="add-state" class="add-state">
+      <div
+        draggable="true"
+        name="add-state-wrapper"
+        id="add-state-wrapper"
+        class="add-state-wrapper"
+      >
+        <button class="add-close-button" id="add-close-button">x</button>
+        <textarea
+          type="text"
+          name="add-state-input"
+          id="add-state-input"
+          class="add-state-input"
+          style="font-size: 12px"
+        ></textarea>
+
+        <input id="add-state-submit" type="submit" class="add-state-submit" />
+      </div>
+    </div>
+
+    <div
+      draggable="true"
+      name="add-function"
+      id="add-function"
+      class="add-function"
+    >
+      <div
+        draggable="true"
+        name="add-function-wrapper"
+        id="add-function-wrapper"
+        class="add-function-wrapper"
+      >
+        <button class="close-button" id="close-button">x</button>
+        <textarea
+          type="text"
+          name="function-input"
+          id="function-input"
+          class="function-input"
+          style="font-size: 12px"
+        ></textarea>
+
+        <input
+          id="add-function-submit"
+          type="submit"
+          class="add-function-submit"
+        />
+      </div>
+    </div>
+    <script type="module" src="../Business Logic/main.js"></script>
+  </body>
+</html>
