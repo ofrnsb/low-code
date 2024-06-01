@@ -14,7 +14,7 @@ export const componentStyles = [
     },
   },
   {
-    name: 'Container',
+    name: 'Div',
     tag: 'div',
     src: '../Assets/html-icon.png',
     category: 'container-elements',
@@ -25,21 +25,9 @@ export const componentStyles = [
       boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
     },
   },
+
   {
-    name: 'Form Container',
-    tag: 'div',
-    src: '../Assets/html-icon.png',
-    category: 'container-elements',
-    style: {
-      backgroundColor: '#f8f9fa',
-      padding: '1rem',
-      borderRadius: '0.25rem',
-      boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-    },
-    type: 'FormContainer',
-  },
-  {
-    name: 'Text',
+    name: 'P',
     tag: 'p',
     src: '../Assets/html-icon.png',
     category: 'text-elements',
@@ -50,7 +38,7 @@ export const componentStyles = [
     },
   },
   {
-    name: 'Heading 1',
+    name: 'H1',
     tag: 'h1',
     src: '../Assets/html-icon.png',
     category: 'text-elements',
@@ -61,7 +49,7 @@ export const componentStyles = [
     },
   },
   {
-    name: 'Heading 2',
+    name: 'H2',
     tag: 'h2',
     src: '../Assets/html-icon.png',
     category: 'text-elements',
@@ -72,7 +60,7 @@ export const componentStyles = [
     },
   },
   {
-    name: 'Unordered List',
+    name: 'UL',
     tag: 'ul',
     src: '../Assets/html-icon.png',
     category: 'list-elements',
@@ -82,7 +70,7 @@ export const componentStyles = [
     },
   },
   {
-    name: 'Ordered List',
+    name: 'OL',
     tag: 'ol',
     src: '../Assets/html-icon.png',
     category: 'list-elements',
@@ -92,7 +80,7 @@ export const componentStyles = [
     },
   },
   {
-    name: 'List Item',
+    name: 'LI',
     tag: 'li',
     src: '../Assets/html-icon.png',
     category: 'list-elements',
@@ -122,23 +110,13 @@ export const componentStyles = [
     },
   },
   {
-    name: 'Form Container',
+    name: 'Form',
     tag: 'form',
     src: '../Assets/html-icon.png',
     category: 'form-elements',
     style: {
       margin: '0',
       padding: '0',
-    },
-  },
-  {
-    name: 'Form Label',
-    tag: 'label',
-    src: '../Assets/html-icon.png',
-    category: 'form-elements',
-    style: {
-      display: 'block',
-      marginBottom: '0.5rem',
     },
   },
 ];
