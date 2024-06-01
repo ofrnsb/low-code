@@ -4,7 +4,6 @@ body {
   font-family: Arial, sans-serif;
   display: flex;
   height: 100vh;
-  background-color: #f0f0f0;
   overflow: hidden;
 }
 * {
@@ -42,7 +41,6 @@ textarea::placeholder {
 .editor {
   flex: 1;
   position: relative;
-  margin: 10px;
   background-color: white;
   overflow: hidden;
 }
@@ -111,7 +109,9 @@ textarea::placeholder {
 .sidebar {
   width: min-content;
   max-height: 100vh;
-  background-color: #f0f0f0;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
+  background-color: rgba(124, 124, 124, 0.2);
+  backdrop-filter: blur(3px);
 
   color: #fff;
   padding: 0 10px;
@@ -164,7 +164,9 @@ textarea::placeholder {
 .css-sidebar {
   width: min-content;
   max-height: 100vh;
-  background-color: #f0f0f0;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
+  background-color: rgba(124, 124, 124, 0.2);
+  backdrop-filter: blur(3px);
 
   color: #fff;
   padding: 0 10px;

@@ -41,7 +41,10 @@ export function makeDraggable(element) {
       body.addEventListener('mousemove', elementDrag);
       element.style.cursor = 'grabbing';
       element.style.transition = 'background 0.3s';
-      element.style.background = '#D4D4D4';
+
+      element.style.boxShadow = '0 0 2px 0 rgba(0, 0, 0, 0.2)';
+      element.style.backgroundColor = 'rgba(124, 124, 124, 0.25)';
+      element.style.backdropFilter = 'blur(5px)';
       if (element.getElementsByClassName('sidebar-textContent')[0]) {
         element.getElementsByClassName('sidebar-textContent')[0].style.color =
           '#f0f0f0';
@@ -92,7 +95,10 @@ export function makeDraggable(element) {
 
 function dragStopped(element) {
   element.style.cursor = 'grab';
-  element.style.background = '#f0f0f0';
+  element.style.boxShadow = '0 0 4px 0 rgba(0, 0, 0, 0.2)';
+  element.style.backgroundColor = 'rgba(124, 124, 124, 0.2)';
+  element.style.backdropFilter = 'blur(3px)';
+
   if (element.getElementsByClassName('sidebar-textContent')[0])
     element.getElementsByClassName('sidebar-textContent')[0].style.color =
       '#CCCCCC';
