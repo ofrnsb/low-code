@@ -25,6 +25,18 @@ export const componentStyles = [
       boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
     },
   },
+  {
+    name: 'Nav',
+    tag: 'nav',
+    src: '../Assets/html-icon.png',
+    category: 'container-elements',
+    style: {
+      backgroundColor: '#f8f9fa',
+      padding: '1rem',
+      boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+      width: '100%',
+    },
+  },
 
   {
     name: 'P',

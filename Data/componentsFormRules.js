@@ -45,4 +45,22 @@ export const componentFormRules = {
       },
     ],
   },
+  h1: {
+    fields: [
+      {
+        label: 'Background Color',
+        id: 'css-background-color-input',
+        type: 'color',
+      },
+    ],
+  },
+  nav: {
+    fields: [
+      {
+        label: 'Background Color',
+        id: 'css-background-color-input',
+        type: 'color',
+      },
+    ],
+  },
 };
