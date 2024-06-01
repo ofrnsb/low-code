@@ -10,6 +10,7 @@ import {
   toggleState,
 } from './componentListGenerator.js';
 import { setupDraggableComponents } from './drag.js';
+import { dragSetup } from './dragSetup.js';
 import { setupEditor } from './editor.js';
 import { setupExport } from './export.js';
 import { setupCSSForm } from './form.js';
@@ -40,7 +41,7 @@ addEventListener('DOMContentLoaded', (event) => {
   toggleForm();
   setupEditor();
 
-  // setupCSSForm();
+  dragSetup();
 
   removeComponent();
 
