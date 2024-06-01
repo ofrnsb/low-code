@@ -40,8 +40,9 @@ export function setupEditor() {
 
 export function createComponent(tagName, x, y) {
   const preMadeComponent = componentStyles.find(
-    (component) => component.tag === tagName.toLowerCase()
+    (component) => component.name.toLowerCase() === tagName.toLowerCase()
   );
+  console.log(preMadeComponent);
   if (!preMadeComponent) {
     throw new Error(`Component style for ${tagName} not found`);
   }

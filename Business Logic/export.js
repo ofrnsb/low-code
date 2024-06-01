@@ -101,6 +101,75 @@ function extractJavaScript() {
     });
   }
 
+  let isInMakeItArray = [];
+  let isInSavedButtonFunction = [];
+
+  makeItArray.forEach((state, stateId) => {
+    state.data.listeners.forEach((listener, listenerId) => {
+      isInMakeItArray.push(listener);
+    });
+  });
+
+  SAVED_BUTTONFUNCTION.forEach((buttonFunction) => {
+    isInSavedButtonFunction.push(buttonFunction.id);
+  });
+
+  const isInBoth = isInMakeItArray.filter((element) =>
+    isInSavedButtonFunction.includes(element)
+  );
+  const isInMakeItArrayFiltered = isInMakeItArray.filter(
+    (item) => !isInBoth.includes(item)
+  );
+  const isInSavedButtonFunctionFiltered = isInSavedButtonFunction.filter(
+    (item) => !isInBoth.includes(item)
+  );
+
+  makeItArray.forEach((state, stateId) => {
+    state.data.listeners.forEach((listener, listenerId) => {
+      if (isInMakeItArrayFiltered.includes(listener)) {
+        fileContent += `
+      document
+      .getElementById('${listener}')
+      .addEventListener('click', function () {
+        set${makeItArray[stateId].stateName
+          .charAt(0)
+          .toUpperCase()}${state.stateName.slice(1)}.setState();
+      });
+            `;
+      }
+    });
+  });
+
+  SAVED_BUTTONFUNCTION.forEach((buttonFunction) => {
+    if (isInSavedButtonFunctionFiltered.includes(buttonFunction.id)) {
+      fileContent += `
+      document
+      .getElementById('${buttonFunction.id}')
+      .addEventListener('click', function () {
+        ${buttonFunction.functionCode}
+      });`;
+    }
+  });
+
+  isInBoth.forEach((listeners) => {
+    makeItArray.forEach((state, stateId) => {
+      state.data.listeners.forEach((listener, listenerId) => {
+        if (listeners === listener) {
+          fileContent += `
+        document
+        .getElementById('${listener}')
+        .addEventListener('click', function () {
+          ${addStateGenerator(listener)}
+          set${makeItArray[stateId].stateName
+            .charAt(0)
+            .toUpperCase()}${state.stateName.slice(1)}.setState();
+        });
+              `;
+        }
+      });
+    });
+  });
+
   function addStateGenerator(listener) {
     updateSavedButtonFunction();
     let returnedFunction = '';
@@ -112,20 +181,7 @@ function extractJavaScript() {
     return returnedFunction;
   }
 
-  makeItArray.forEach((state, stateId) => {
-    state.data.listeners.forEach((listener, listenerId) => {
-      fileContent += `
-      document
-      .getElementById('${listener}')
-      .addEventListener('click', function () {
-        ${addStateGenerator(listener)}
-        set${makeItArray[stateId].stateName
-          .charAt(0)
-          .toUpperCase()}${state.stateName.slice(1)}.setState();
-      });
-            `;
-    });
-  });
+  // console.log(fileContent);
 
   return fileContent;
 }
