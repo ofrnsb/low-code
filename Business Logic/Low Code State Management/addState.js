@@ -11,6 +11,7 @@ import {
   ADDSTATE_TEXTAREA,
   POPUPMESSAGE_MODAL,
 } from '../main.js';
+import { updateStateList } from './listState.js';
 
 export function AddState() {
   let stateObj;
@@ -45,7 +46,9 @@ export function AddState() {
       });
       localStorage.setItem('stateContent', JSON.stringify(stateObj));
 
+      // console.log('stateObj', );
       updateSavedState();
+      updateStateList(stateObj[stateObj.length - 1]);
       ADDSTATE_MODAL.classList.remove('visible');
       ADDSTATE_TEXTAREA.value = '';
     } catch (error) {

@@ -8,16 +8,18 @@ import {
   UPDATESTATE_TEXTAREA,
 } from '../main.js';
 
+let rightBar = document.getElementById('css-sidebar');
+let stateObj;
+let isStateList = false;
+
 export function listState() {
-  let rightBar = document.getElementById('css-sidebar');
-  let stateObj;
-  let isStateList = false;
   const {
     stateObj: whichComponent,
     subscribeToState: subscribeToWhichComponentState,
   } = retrieveState('whichComponent');
 
   STATELIST_BUTTON.addEventListener('click', () => {
+    console.log('stateListButton clicked', JSON.parse(SAVED_STATE));
     isStateList = !isStateList;
     if (isStateList) {
       if (SAVED_STATE) {
@@ -49,4 +51,26 @@ export function listState() {
       }
     }
   });
+}
+
+export function updateStateList(lastAddedState) {
+  if (isStateList) {
+    const stateName = document.createElement('p');
+    stateName.textContent = lastAddedState.stateName;
+    stateName.classList.add('state-list-name');
+    stateName.id = 'state-list-name';
+    stateName.addEventListener('click', function () {
+      UPDATESTATE_MODAL.classList.add('visible');
+      if (
+        whichComponent.getState().id === 'editor' ||
+        whichComponent.getState().id === undefined
+      ) {
+        UPDATESTATE_SUBMIT.setAttribute('disabled', '');
+        UPDATESTATE_TEXTAREA.setAttribute('disabled', '');
+      }
+      UPDATESTATE_TEXTAREA.value = JSON.stringify(lastAddedState, null, 2);
+    });
+
+    STATELIST_WRAPPER.appendChild(stateName);
+  }
 }
