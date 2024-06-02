@@ -46,7 +46,6 @@ export function AddState() {
       });
       localStorage.setItem('stateContent', JSON.stringify(stateObj));
 
-      // console.log('stateObj', );
       updateSavedState();
       updateStateList(stateObj[stateObj.length - 1]);
       ADDSTATE_MODAL.classList.remove('visible');

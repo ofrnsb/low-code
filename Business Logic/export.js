@@ -183,8 +183,6 @@ function extractJavaScript() {
     }
   }
 
-  // console.log(fileContent);
-
   return fileContent;
 }
 

@@ -102,8 +102,6 @@ export function showAddFunctionModal() {
         POPUPMESSAGE_MODAL.classList.remove('error');
       }, 1000);
     }
-
-    console.log(appFunctionality.getState());
   });
 }
 

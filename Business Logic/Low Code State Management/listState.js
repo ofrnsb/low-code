@@ -19,7 +19,6 @@ export function listState() {
   } = retrieveState('whichComponent');
 
   STATELIST_BUTTON.addEventListener('click', () => {
-    console.log('stateListButton clicked', JSON.parse(SAVED_STATE));
     isStateList = !isStateList;
     if (isStateList) {
       if (SAVED_STATE) {
