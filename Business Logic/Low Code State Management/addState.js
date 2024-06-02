@@ -1,4 +1,4 @@
-import { SAVED_STATE } from '../../Data/CONST.js';
+import { SAVED_STATE, updateSavedState } from '../../Data/CONST.js';
 import {
   releaseState,
   retrieveState,
@@ -45,6 +45,7 @@ export function AddState() {
       });
       localStorage.setItem('stateContent', JSON.stringify(stateObj));
 
+      updateSavedState();
       ADDSTATE_MODAL.classList.remove('visible');
       ADDSTATE_TEXTAREA.value = '';
     } catch (error) {
