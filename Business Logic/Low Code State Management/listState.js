@@ -59,7 +59,7 @@ export function listState() {
           stateListGroup.appendChild(stateName);
         });
       } else {
-        setNotification('No state available');
+        setNotification('No state available', 'error');
         isStateList = false;
       }
     } else {

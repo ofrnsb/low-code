@@ -96,7 +96,7 @@ export function showAddFunctionModal() {
         JSON.stringify(formatedFunctionData)
       );
     } catch (error) {
-      setNotification(error.message);
+      setNotification(error.message, 'error');
     }
   });
 }

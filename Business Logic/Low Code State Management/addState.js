@@ -62,7 +62,7 @@ export function AddState() {
       ADDSTATE_MODAL.classList.remove('visible');
       ADDSTATE_TEXTAREA.value = '';
     } catch (error) {
-      setNotification(error.message);
+      setNotification(error.message, 'error');
     }
   });
 }

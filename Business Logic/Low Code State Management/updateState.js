@@ -37,7 +37,7 @@ export function UpdateState() {
 
       savedState[targetIndex].data.listeners.forEach((listener) => {
         if (listener === whichComponent.getState().id) {
-          setNotification('button already subscribed to state');
+          setNotification('button already subscribed to state', 'error');
         } else {
           savedState[targetIndex].data.listeners.push(
             whichComponent.getState().id
