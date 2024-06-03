@@ -32,7 +32,9 @@ export function makeDraggable(element) {
     console.log(e.target.classList[0], element.classList[0]);
     if (
       e.target.classList[0] !== 'sidebar-textContent' &&
-      e.target.classList[0] !== 'css-sidebar'
+      e.target.classList[0] !== 'css-sidebar' &&
+      e.target.classList[0] !== 'sidebar' &&
+      e.target.classList[0] !== 'sidebar-textContent'
     )
       return;
 
