@@ -29,7 +29,6 @@ export function makeDraggable(element) {
   let body = document.querySelector('body');
 
   element.addEventListener('mousedown', function (e) {
-    console.log(e.target.classList[0], element.classList[0]);
     if (
       e.target.classList[0] !== 'sidebar-textContent' &&
       e.target.classList[0] !== 'css-sidebar' &&

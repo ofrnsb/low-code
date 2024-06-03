@@ -1,5 +1,6 @@
 import { SAVED_STATE } from '../../Data/CONST.js';
 import { retrieveState } from '../Global State Management/globalStateManagement.js';
+import { setNotification } from '../Notification/notification.js';
 import {
   GETUPDATESTATE_SUBMIT,
   POPUPMESSAGE_MODAL,
@@ -34,11 +35,17 @@ export function UpdateState() {
         (state) => state.stateName === textAreaValue.stateName
       );
 
-      savedState[targetIndex].data.listeners.push(whichComponent.getState().id);
-
-      localStorage.setItem('stateContent', JSON.stringify(savedState));
-
-      UPDATESTATE_MODAL.classList.remove('visible');
+      savedState[targetIndex].data.listeners.forEach((listener) => {
+        if (listener === whichComponent.getState().id) {
+          setNotification('button already subscribed to state');
+        } else {
+          savedState[targetIndex].data.listeners.push(
+            whichComponent.getState().id
+          );
+          localStorage.setItem('stateContent', JSON.stringify(savedState));
+          UPDATESTATE_MODAL.classList.remove('visible');
+        }
+      });
     } catch (error) {
       POPUPMESSAGE_MODAL.textContent = error.message;
       POPUPMESSAGE_MODAL.classList.add('error');

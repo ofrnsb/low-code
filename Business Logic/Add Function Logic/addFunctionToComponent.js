@@ -4,12 +4,12 @@ import {
   releaseState,
   retrieveState,
 } from '../Global State Management/globalStateManagement.js';
+import { setNotification } from '../Notification/notification.js';
 import {
   ADDFUNCTION_MODAL,
   ADDFUNCTION_SUBMIT,
   ADDFUNCTION_TEXTARE,
   CLOSEADDFUNCTION_MODAL,
-  POPUPMESSAGE_MODAL,
 } from '../main.js';
 
 export function showAddFunctionModal() {
@@ -96,11 +96,7 @@ export function showAddFunctionModal() {
         JSON.stringify(formatedFunctionData)
       );
     } catch (error) {
-      POPUPMESSAGE_MODAL.textContent = error.message;
-      POPUPMESSAGE_MODAL.classList.add('error');
-      setTimeout(() => {
-        POPUPMESSAGE_MODAL.classList.remove('error');
-      }, 1000);
+      setNotification(error.message);
     }
   });
 }

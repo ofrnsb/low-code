@@ -3,13 +3,13 @@ import {
   releaseState,
   retrieveState,
 } from '../Global State Management/globalStateManagement.js';
+import { setNotification } from '../Notification/notification.js';
 import {
   ADDSTATE_BUTTON,
   ADDSTATE_CLOSEBUTTON,
   ADDSTATE_MODAL,
   ADDSTATE_SUBMIT,
   ADDSTATE_TEXTAREA,
-  POPUPMESSAGE_MODAL,
 } from '../main.js';
 import { updateStateList } from './listState.js';
 
@@ -62,11 +62,7 @@ export function AddState() {
       ADDSTATE_MODAL.classList.remove('visible');
       ADDSTATE_TEXTAREA.value = '';
     } catch (error) {
-      POPUPMESSAGE_MODAL.textContent = error.message;
-      POPUPMESSAGE_MODAL.classList.add('error');
-      setTimeout(() => {
-        POPUPMESSAGE_MODAL.classList.remove('error');
-      }, 1000);
+      setNotification(error.message);
     }
   });
 }
