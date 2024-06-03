@@ -1,10 +1,11 @@
 import { SAVED_STATE } from '../../Data/CONST.js';
 import { retrieveState } from '../Global State Management/globalStateManagement.js';
 import {
+  GETUPDATESTATE_SUBMIT,
   POPUPMESSAGE_MODAL,
+  SETUPDATESTATE_SUBMIT,
   UPDATESTATE_CLOSEBUTTON,
   UPDATESTATE_MODAL,
-  UPDATESTATE_SUBMIT,
   UPDATESTATE_TEXTAREA,
 } from '../main.js';
 
@@ -19,12 +20,13 @@ export function UpdateState() {
   UPDATESTATE_CLOSEBUTTON.addEventListener('click', function () {
     UPDATESTATE_MODAL.classList.remove('visible');
 
-    UPDATESTATE_SUBMIT.removeAttribute('disabled');
+    SETUPDATESTATE_SUBMIT.removeAttribute('disabled');
+    GETUPDATESTATE_SUBMIT.removeAttribute('disabled');
 
     UPDATESTATE_TEXTAREA.removeAttribute('disabled');
   });
 
-  UPDATESTATE_SUBMIT.addEventListener('click', function () {
+  GETUPDATESTATE_SUBMIT.addEventListener('click', function () {
     let textAreaValue = JSON.parse(UPDATESTATE_TEXTAREA.value);
     let savedState = JSON.parse(SAVED_STATE);
     try {

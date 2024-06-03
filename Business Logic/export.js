@@ -104,83 +104,93 @@ function extractJavaScript() {
   let isInMakeItArray = [];
   let isInSavedButtonFunction = [];
 
-  if (makeItArray || SAVED_BUTTONFUNCTION) {
+  if (makeItArray) {
     makeItArray.forEach((state, stateId) => {
       state.data.listeners.forEach((listener, listenerId) => {
         isInMakeItArray.push(listener);
       });
     });
+  }
 
+  if (SAVED_BUTTONFUNCTION) {
     SAVED_BUTTONFUNCTION.forEach((buttonFunction) => {
       isInSavedButtonFunction.push(buttonFunction.id);
     });
+  }
 
-    const isInBoth = isInMakeItArray.filter((element) =>
-      isInSavedButtonFunction.includes(element)
-    );
-    const isInMakeItArrayFiltered = isInMakeItArray.filter(
-      (item) => !isInBoth.includes(item)
-    );
-    const isInSavedButtonFunctionFiltered = isInSavedButtonFunction.filter(
-      (item) => !isInBoth.includes(item)
-    );
+  const isInBoth = isInMakeItArray.filter((element) =>
+    isInSavedButtonFunction.includes(element)
+  );
+  const isInMakeItArrayFiltered = isInMakeItArray.filter(
+    (item) => !isInBoth.includes(item)
+  );
+  const isInSavedButtonFunctionFiltered = isInSavedButtonFunction.filter(
+    (item) => !isInBoth.includes(item)
+  );
 
+  if (makeItArray) {
     makeItArray.forEach((state, stateId) => {
       state.data.listeners.forEach((listener, listenerId) => {
         if (isInMakeItArrayFiltered.includes(listener)) {
           fileContent += `
-      document
-      .getElementById('${listener}')
-      .addEventListener('click', function () {
-        set${makeItArray[stateId].stateName
-          .charAt(0)
-          .toUpperCase()}${state.stateName.slice(1)}.setState();
-      });
-            `;
+    document
+    .getElementById('${listener}')
+    .addEventListener('click', function () {
+      set${makeItArray[stateId].stateName
+        .charAt(0)
+        .toUpperCase()}${state.stateName.slice(1)}.getState();
+    });
+        `;
         }
       });
     });
+  }
 
+  if (SAVED_BUTTONFUNCTION) {
     SAVED_BUTTONFUNCTION.forEach((buttonFunction) => {
       if (isInSavedButtonFunctionFiltered.includes(buttonFunction.id)) {
         fileContent += `
-      document
-      .getElementById('${buttonFunction.id}')
-      .addEventListener('click', function () {
-        ${buttonFunction.functionCode}
-      });`;
+    document
+    .getElementById('${buttonFunction.id}')
+    .addEventListener('click', function () {
+      ${buttonFunction.functionCode}
+    });`;
       }
     });
+  }
 
-    isInBoth.forEach((listeners) => {
+  isInBoth.forEach((listener) => {
+    if (makeItArray) {
       makeItArray.forEach((state, stateId) => {
         state.data.listeners.forEach((listener, listenerId) => {
-          if (listeners === listener) {
+          if (listener === listener) {
             fileContent += `
-        document
-        .getElementById('${listener}')
-        .addEventListener('click', function () {
-          ${addStateGenerator(listener)}
-          set${makeItArray[stateId].stateName
-            .charAt(0)
-            .toUpperCase()}${state.stateName.slice(1)}.setState();
-        });
-              `;
+      document
+      .getElementById('${listener}')
+      .addEventListener('click', function () {
+        ${addStateGenerator(listener)}
+        set${makeItArray[stateId].stateName
+          .charAt(0)
+          .toUpperCase()}${state.stateName.slice(1)}.getState();
+      });
+          `;
           }
         });
       });
-    });
+    }
+  });
 
-    function addStateGenerator(listener) {
-      updateSavedButtonFunction();
-      let returnedFunction = '';
+  function addStateGenerator(listener) {
+    updateSavedButtonFunction();
+    let returnedFunction = '';
+    if (SAVED_BUTTONFUNCTION) {
       SAVED_BUTTONFUNCTION.forEach((func) => {
         if (func.id === listener) {
           returnedFunction = `${func.functionCode}`;
         }
       });
-      return returnedFunction;
     }
+    return returnedFunction;
   }
 
   return fileContent;

@@ -72,12 +72,12 @@ export const CSS_FORM_SUBMIT = document.getElementById('submit-css');
 export const STATETOGGLE_BUTTON = document.getElementById('state-button-group');
 
 // UPDATE STATE
-export const UPDATESTATE_BUTTON = document.getElementById(
-  'update-state-button'
-);
 export const UPDATESTATE_MODAL = document.getElementById('update-state');
-export const UPDATESTATE_SUBMIT = document.getElementById(
-  'update-state-submit'
+export const SETUPDATESTATE_SUBMIT = document.getElementById(
+  'set-update-state-submit'
+);
+export const GETUPDATESTATE_SUBMIT = document.getElementById(
+  'get-update-state-submit'
 );
 export const UPDATESTATE_CLOSEBUTTON = document.getElementById(
   'update-close-button'

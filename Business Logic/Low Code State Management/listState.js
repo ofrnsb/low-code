@@ -1,16 +1,21 @@
 import { SAVED_STATE } from '../../Data/CONST.js';
 import { retrieveState } from '../Global State Management/globalStateManagement.js';
 import {
+  GETUPDATESTATE_SUBMIT,
+  SETUPDATESTATE_SUBMIT,
   STATELIST_BUTTON,
   STATELIST_WRAPPER,
   UPDATESTATE_MODAL,
-  UPDATESTATE_SUBMIT,
   UPDATESTATE_TEXTAREA,
 } from '../main.js';
 
 let rightBar = document.getElementById('css-sidebar');
 let stateObj;
 let isStateList = false;
+
+var stateListGroup = document.createElement('div');
+stateListGroup.classList.add('state-list');
+stateListGroup.id = 'state-list';
 
 export function listState() {
   const {
@@ -23,6 +28,7 @@ export function listState() {
     if (isStateList) {
       if (SAVED_STATE) {
         stateObj = JSON.parse(SAVED_STATE);
+        STATELIST_WRAPPER.appendChild(stateListGroup);
         stateObj.forEach((state) => {
           const stateName = document.createElement('p');
           stateName.textContent = state.stateName;
@@ -34,20 +40,18 @@ export function listState() {
               whichComponent.getState().id === 'editor' ||
               whichComponent.getState().id === undefined
             ) {
-              UPDATESTATE_SUBMIT.setAttribute('disabled', '');
+              SETUPDATESTATE_SUBMIT.setAttribute('disabled', '');
+              GETUPDATESTATE_SUBMIT.setAttribute('disabled', '');
               UPDATESTATE_TEXTAREA.setAttribute('disabled', '');
             }
             UPDATESTATE_TEXTAREA.value = JSON.stringify(state, null, 2);
           });
 
-          STATELIST_WRAPPER.appendChild(stateName);
+          stateListGroup.appendChild(stateName);
         });
       }
     } else {
-      const stateList = document.querySelectorAll('.state-list-name');
-      for (const state of stateList) {
-        STATELIST_WRAPPER.removeChild(state);
-      }
+      STATELIST_WRAPPER.removeChild(stateListGroup);
     }
   });
 }
@@ -64,12 +68,13 @@ export function updateStateList(lastAddedState) {
         whichComponent.getState().id === 'editor' ||
         whichComponent.getState().id === undefined
       ) {
-        UPDATESTATE_SUBMIT.setAttribute('disabled', '');
+        SETUPDATESTATE_SUBMIT.setAttribute('disabled', '');
+        GETUPDATESTATE_SUBMIT.setAttribute('disabled', '');
         UPDATESTATE_TEXTAREA.setAttribute('disabled', '');
       }
       UPDATESTATE_TEXTAREA.value = JSON.stringify(lastAddedState, null, 2);
     });
 
-    STATELIST_WRAPPER.appendChild(stateName);
+    stateListGroup.appendChild(stateName);
   }
 }
