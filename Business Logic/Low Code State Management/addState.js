@@ -56,8 +56,9 @@ export function AddState() {
 
       localStorage.setItem('stateContent', JSON.stringify(stateObj));
 
-      updateSavedState();
       updateStateList(stateObj[stateObj.length - 1]);
+      updateSavedState();
+
       ADDSTATE_MODAL.classList.remove('visible');
       ADDSTATE_TEXTAREA.value = '';
     } catch (error) {

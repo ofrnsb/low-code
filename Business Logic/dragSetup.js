@@ -29,7 +29,13 @@ export function makeDraggable(element) {
   let body = document.querySelector('body');
 
   element.addEventListener('mousedown', function (e) {
-    if (e.target !== element) return;
+    console.log(e.target.classList[0], element.classList[0]);
+    if (
+      e.target.classList[0] !== 'sidebar-textContent' &&
+      e.target.classList[0] !== 'css-sidebar'
+    )
+      return;
+
     e.preventDefault();
     pos3 = e.clientX;
     pos4 = e.clientY;

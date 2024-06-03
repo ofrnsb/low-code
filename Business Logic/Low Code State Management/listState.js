@@ -25,16 +25,20 @@ export function listState() {
 
   STATELIST_BUTTON.addEventListener('click', () => {
     isStateList = !isStateList;
+
     if (isStateList) {
       if (SAVED_STATE) {
         stateObj = JSON.parse(SAVED_STATE);
         STATELIST_WRAPPER.appendChild(stateListGroup);
-        stateObj.forEach((state) => {
+        stateObj.forEach((state, id) => {
           const stateName = document.createElement('p');
           stateName.textContent = state.stateName;
           stateName.classList.add('state-list-name');
           stateName.id = 'state-list-name';
           stateName.addEventListener('click', function () {
+            let updatedSavedState = JSON.parse(
+              localStorage.getItem('stateContent')
+            );
             UPDATESTATE_MODAL.classList.add('visible');
             if (
               whichComponent.getState().id === 'editor' ||
@@ -44,7 +48,11 @@ export function listState() {
               GETUPDATESTATE_SUBMIT.setAttribute('disabled', '');
               UPDATESTATE_TEXTAREA.setAttribute('disabled', '');
             }
-            UPDATESTATE_TEXTAREA.value = JSON.stringify(state, null, 2);
+            UPDATESTATE_TEXTAREA.value = JSON.stringify(
+              updatedSavedState[id],
+              null,
+              2
+            );
           });
 
           stateListGroup.appendChild(stateName);
