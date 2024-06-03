@@ -796,5 +796,5 @@ textarea::placeholder {
 .state-list {
   overflow-x: hidden;
   overflow-y: scroll;
-  height: 105px;
+  max-height: 105px;
 }

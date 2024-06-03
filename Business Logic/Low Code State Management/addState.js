@@ -35,8 +35,17 @@ export function AddState() {
   ADDSTATE_SUBMIT.addEventListener('click', function () {
     try {
       const newState = ADDSTATE_TEXTAREA.value.split(' ');
-      releaseState(`${newState}`, {});
-      const { stateObj: newStateNameRetrive } = retrieveState(`${newState}`);
+      releaseState(
+        `${newState[0]}`,
+        newState[1] === 'array'
+          ? []
+          : newState[1] === 'string'
+          ? ''
+          : newState[1] === 'boolean'
+          ? false
+          : {}
+      );
+      const { stateObj: newStateNameRetrive } = retrieveState(`${newState[0]}`);
 
       stateObj.push({
         stateName: newState[0],
@@ -44,6 +53,7 @@ export function AddState() {
         data: newStateNameRetrive,
         updater: [],
       });
+
       localStorage.setItem('stateContent', JSON.stringify(stateObj));
 
       updateSavedState();
