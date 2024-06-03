@@ -8,6 +8,7 @@ import {
   UPDATESTATE_MODAL,
   UPDATESTATE_TEXTAREA,
 } from '../main.js';
+import { setNotification } from '../Notification/notification.js';
 
 let rightBar = document.getElementById('css-sidebar');
 let stateObj;
@@ -57,10 +58,15 @@ export function listState() {
 
           stateListGroup.appendChild(stateName);
         });
+      } else {
+        setNotification('No state available');
+        isStateList = false;
       }
     } else {
+      stateListGroup.innerHTML = '';
       STATELIST_WRAPPER.removeChild(stateListGroup);
     }
+    console.log('isStateList', isStateList);
   });
 }
 

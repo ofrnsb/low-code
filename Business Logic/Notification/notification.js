@@ -1,3 +1,5 @@
+import { POPUPMESSAGE_MODAL } from '../main.js';
+
 export function setNotification(notification) {
   POPUPMESSAGE_MODAL.textContent = `${notification}`;
   POPUPMESSAGE_MODAL.classList.add('error');
