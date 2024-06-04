@@ -66,7 +66,6 @@ export function listState() {
       stateListGroup.innerHTML = '';
       STATELIST_WRAPPER.removeChild(stateListGroup);
     }
-    console.log('isStateList', isStateList);
   });
 }
 
