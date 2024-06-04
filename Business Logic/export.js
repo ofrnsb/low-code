@@ -101,79 +101,128 @@ function extractJavaScript() {
     });
   }
 
-  let isInMakeItArray = [];
+  let stateListener = [];
+  let stateUpdater = [];
   let isInSavedButtonFunction = [];
 
-  if (makeItArray) {
-    makeItArray.forEach((state, stateId) => {
+  if (makeItArray || SAVED_BUTTONFUNCTION) {
+    (makeItArray || []).forEach((state, stateId) => {
       state.data.listeners.forEach((listener, listenerId) => {
-        isInMakeItArray.push(listener);
+        stateListener.push(listener);
+      });
+      state.updater.forEach((updater, updaterId) => {
+        stateUpdater.push(updater);
       });
     });
-  }
 
-  if (SAVED_BUTTONFUNCTION) {
-    SAVED_BUTTONFUNCTION.forEach((buttonFunction) => {
+    (SAVED_BUTTONFUNCTION || []).forEach((buttonFunction) => {
       isInSavedButtonFunction.push(buttonFunction.id);
     });
   }
 
-  const isInBoth = isInMakeItArray.filter((element) =>
-    isInSavedButtonFunction.includes(element)
-  );
-  const isInMakeItArrayFiltered = isInMakeItArray.filter(
-    (item) => !isInBoth.includes(item)
-  );
-  const isInSavedButtonFunctionFiltered = isInSavedButtonFunction.filter(
-    (item) => !isInBoth.includes(item)
-  );
+  let allJs = [
+    ...new Set([...stateListener, ...stateUpdater, ...isInSavedButtonFunction]),
+  ];
 
-  if (makeItArray) {
-    makeItArray.forEach((state, stateId) => {
-      state.data.listeners.forEach((listener, listenerId) => {
-        if (isInMakeItArrayFiltered.includes(listener)) {
+  allJs.forEach((state, stateId) => {
+    let inStateListener = stateListener.includes(state);
+    let inStateUpdater = stateUpdater.includes(state);
+    let inSavedButtonFunction = isInSavedButtonFunction.includes(state);
+
+    if (inStateListener && !inStateUpdater && !inSavedButtonFunction) {
+      makeItArray.forEach((stateValue, id) => {
+        stateValue.data.listeners.forEach((listener) => {
+          if (listener === state) {
+            fileContent += `
+            document
+            .getElementById('${listener}')
+            .addEventListener('click', function () {
+              set${makeItArray[id].stateName
+                .charAt(0)
+                .toUpperCase()}${stateValue.stateName.slice(1)}.getState();
+            });
+                `;
+          }
+        });
+      });
+    } else if (!inStateListener && inStateUpdater && !inSavedButtonFunction) {
+      makeItArray.forEach((stateValue, id) => {
+        stateValue.updater.forEach((updater) => {
+          if (updater === state) {
+            fileContent += `
+            document
+            .getElementById('${updater}')
+            .addEventListener('click', function () {
+              set${makeItArray[id].stateName
+                .charAt(0)
+                .toUpperCase()}${stateValue.stateName.slice(1)}.setState();
+            });
+                `;
+          }
+        });
+      });
+    } else if (!inStateListener && !inStateUpdater && inSavedButtonFunction) {
+      SAVED_BUTTONFUNCTION.forEach((buttonFunction) => {
+        if (buttonFunction.id === state) {
           fileContent += `
-    document
-    .getElementById('${listener}')
-    .addEventListener('click', function () {
-      set${makeItArray[stateId].stateName
-        .charAt(0)
-        .toUpperCase()}${state.stateName.slice(1)}.getState();
-    });
-        `;
+          document
+          .getElementById('${buttonFunction.id}')
+          .addEventListener('click', function () {
+            ${buttonFunction.functionCode}
+          });
+              `;
         }
       });
-    });
-  }
+    } else if (inStateListener && inStateUpdater && !inSavedButtonFunction) {
+      stateValue.updater.forEach((updater) => {
+        if (updater === state) {
+          fileContent += `
+          document
+          .getElementById('${updater}')
+          .addEventListener('click', function () {
+            set${makeItArray[id].stateName
+              .charAt(0)
+              .toUpperCase()}${stateValue.stateName.slice(1)}.setState();
 
-  if (SAVED_BUTTONFUNCTION) {
-    SAVED_BUTTONFUNCTION.forEach((buttonFunction) => {
-      if (isInSavedButtonFunctionFiltered.includes(buttonFunction.id)) {
-        fileContent += `
-    document
-    .getElementById('${buttonFunction.id}')
-    .addEventListener('click', function () {
-      ${buttonFunction.functionCode}
-    });`;
-      }
-    });
-  }
-
-  isInBoth.forEach((listener) => {
-    if (makeItArray) {
-      makeItArray.forEach((state, stateId) => {
-        state.data.listeners.forEach((listener, listenerId) => {
-          if (listener === listener) {
-            fileContent += `
-      document
-      .getElementById('${listener}')
-      .addEventListener('click', function () {
-        ${addStateGenerator(listener)}
-        set${makeItArray[stateId].stateName
-          .charAt(0)
-          .toUpperCase()}${state.stateName.slice(1)}.getState();
+              set${makeItArray[id].stateName
+                .charAt(0)
+                .toUpperCase()}${stateValue.stateName.slice(1)}.getState();
+          });
+              `;
+        }
       });
-          `;
+    } else if (inStateListener && !inStateUpdater && inSavedButtonFunction) {
+      makeItArray.forEach((stateValue, id) => {
+        stateValue.data.listeners.forEach((listener) => {
+          if (listener === state) {
+            fileContent += `
+            document
+            .getElementById('${listener}')
+            .addEventListener('click', function () {
+              set${makeItArray[id].stateName
+                .charAt(0)
+                .toUpperCase()}${stateValue.stateName.slice(1)}.getState();
+                
+                ${addStateGenerator(listener)}
+            });
+                `;
+          }
+        });
+      });
+    } else if (!inStateListener && inStateUpdater && inSavedButtonFunction) {
+      makeItArray.forEach((stateValue, id) => {
+        stateValue.updater.forEach((updater) => {
+          if (updater === state) {
+            fileContent += `
+            document
+            .getElementById('${updater}')
+            .addEventListener('click', function () {
+              set${makeItArray[id].stateName
+                .charAt(0)
+                .toUpperCase()}${stateValue.stateName.slice(1)}.setState();
+                ${addStateGenerator(updater)}
+            });
+                `;
           }
         });
       });
